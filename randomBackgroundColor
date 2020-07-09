@@ -15,6 +15,7 @@ const setup = () => {
 //Functions
 const isArrayNonexistent = (array) => array == null || (!Array.isArray(array));
 const isArrayEmpty = (array) => isArrayNonexistent(array) || array.length < 1;
+const isIndexInvalid = (index, array) => index == null || index >= array.length;
 
 const changeBackgroundToRandomColor = (event) => {
 	//Check if global variables are available
@@ -29,9 +30,13 @@ const changeBackgroundToRandomColor = (event) => {
 };
 
 const updateBackground = (colorIndex, attributeStorage) => {
-	if(isArrayEmpty(COLORS) || colorIndex == null || colorIndex >= COLORS.length || attributeStorage == null) return; //Check if colorIndex is valid
+	if(isArrayEmpty(COLORS) || isIndexInvalid(colorIndex, COLORS) || attributeStorage == null) return; //Check if colorIndex is valid
+  
+  //update background
 	const body = document.querySelector('body');
   body.style.backgroundColor = COLORS[colorIndex];
+  
+  //update storage
   attributeStorage.setAttribute('currentIndex', colorIndex);
 }
 
@@ -44,7 +49,7 @@ const getRandomNumber = (lastIndex) => {
   
   let index = 0
   do {
-  	index = edgeMin + Math.ceil(edgeMax * Math.random() || index); //make sure every element has an equal chance to get picked with one bit advantage on index zero.
+  	index = edgeMin + Math.ceil(edgeMax * Math.random() || index); //make sure every element has an equal chance to get picked with one bit advantage on returning the default must random return 0.
     
   } while(lastIndex === index);
   
