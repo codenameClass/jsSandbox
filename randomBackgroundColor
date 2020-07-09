@@ -1,0 +1,50 @@
+const COLORS = ['red', 'green', 'blue', 'yellow', 'orange', 'purple'];
+
+const setup = () => {
+	const body = document.querySelector('body');
+	const button = document.createElement('button');
+  button.textContent = 'Change Color';
+  button.name = 'changeBackground';
+  button.classList.add('button');
+  button.addEventListener('click', changeBackgroundToRandomColor);
+  body.appendChild(button);
+}
+
+const isArrayNonexistent = (array) => array == null || (!Array.isArray(array));
+const isArrayEmpty = (array) => isArrayNonexistent(array) || array.length < 1;
+
+const changeBackgroundToRandomColor = (event) => {
+	//Check if global variables are available
+  if(isArrayEmpty(COLORS)) return;
+
+	const button = event.target;
+  const lastColorIndex = button.hasAttribute('currentIndex') ? parseInt(button.getAttribute('currentIndex'), 10) : -1;
+  const colorIndex = getRandomNumber(lastColorIndex);
+  
+  //Update
+  updateBackground(colorIndex, attributeStorage = button);
+};
+
+const updateBackground = (colorIndex, attributeStorage) => {
+	if(isArrayEmpty(COLORS) || colorIndex == null || colorIndex >= COLORS.length || attributeStorage == null) return; //Check if colorIndex is valid
+	const body = document.querySelector('body');
+  body.style.backgroundColor = COLORS[colorIndex];
+  attributeStorage.setAttribute('currentIndex', colorIndex);
+}
+
+const getRandomNumber = (lastIndex) => {
+	if(isArrayEmpty(COLORS)) return;
+  if(COLORS.length < 2) return 0;
+  
+  const edgeMin = -1;
+  const edgeMax = COLORS.length
+  
+  let index = 0
+  do {
+  	index = edgeMin + Math.ceil(edgeMax * Math.random() || index); //make sure every element has an equal chance to get picked with one bit advantage on index zero.
+    
+  } while(lastIndex === index);
+  
+  return index;
+  
+}
