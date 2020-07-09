@@ -1,5 +1,7 @@
+//GLOBAL
 const COLORS = ['red', 'green', 'blue', 'yellow', 'orange', 'purple'];
 
+//SETUP
 const setup = () => {
 	const body = document.querySelector('body');
 	const button = document.createElement('button');
@@ -10,6 +12,7 @@ const setup = () => {
   body.appendChild(button);
 }
 
+//Functions
 const isArrayNonexistent = (array) => array == null || (!Array.isArray(array));
 const isArrayEmpty = (array) => isArrayNonexistent(array) || array.length < 1;
 
@@ -48,3 +51,6 @@ const getRandomNumber = (lastIndex) => {
   return index;
   
 }
+
+//load
+window.addEventListener('load', setup);
